@@ -1,5 +1,6 @@
-# Retrofit2Demo
-本文注目录： 
+# Retrofit的使用 #
+
+**本文注目录：** 
 
 - Retrofit入门
 - Retrofit注解详解
@@ -12,8 +13,8 @@
 ## 前言
 
 本文中的Retrofit均指代Retrofit2.0。
- 本文涉及到的代码以及测试使用的接口可在[Github](https://github.com/ikidou/Retrofit2Demo)上找到。
- 测试接口服务器在 **server** 项目下，直接运行 [`RESTServer.main()`](https://github.com/ikidou/Retrofit2Demo/blob/master/server/src/main/java/com/github/ikidou/RESTServer.java) 即可启动测试服务器，所面代码示例均使用该接口(接口地址 <http://localhost:4567/> ).
+ 本文涉及到的代码以及测试使用的接口可在[Github](https://github.com/li-fengjie/Retrofit2Demo)上找到。
+ 测试接口服务器在 **server** 项目下，直接运行 [`RESTServer.main()`](https://github.com/li-fengjie/Retrofit2Demo/blob/master/server/src/main/java/com/github/li-fengjie/RESTServer.java) 即可启动测试服务器，所面代码示例均使用该接口(接口地址 <http://localhost:4567/> ).
  当然你也可以自己借助 [json-server](https://github.com/typicode/json-server) 或 最新开源的[Parse](https://github.com/ParsePlatform/parse-server) 搭建一个REST API，不过都需要安装Node.js，有兴趣的可以去试试。
 
 接口列表：
@@ -30,9 +31,6 @@
 
 注：以上的接口的`{id}`和`{page}`均代表一个纯数字，`/blog/{id}` 可以用 `/blog?id=XXX` 代替，page同理。
 
-前面写了[你应该知道的HTTP基础知识](https://www.jianshu.com/p/e544b7a76dac) 介绍了HTTP的相关知识，不知道那些想了解Retrofit的同鞋是不是去看了Retrofit的[官方教程](http://square.github.io/retrofit/)，曾经我在[你真的会用Gson吗?Gson使用指南（四）](https://www.jianshu.com/p/3108f1e44155) 中说当你了解了注解、反射、泛型、HTTP的内容只需要看一篇Retrofit的代码示例就可以轻松玩转Retrofit，不知道你玩转了没?
- 当然注解、反射、泛型的内容还没有写，Retrofit的内容却先来了！毕竟看懂Retrofit也只需要会使就行，你准备好了吗？
-
 ## 1、Retrofit入门
 
 Retrofit 其实相当简单，简单到源码只有37个文件，其中22个文件是注解还都和HTTP有关，真正暴露给用户的类并不多,所以我看了一遍 [官方教程](http://square.github.io/retrofit/) 大多数情景就可以无障碍使用，如果你还没有看过，可以先去看看,虽然是英文，但代码才是最好的教程不是么?当然本篇文章会介绍得详细一点，不能写一篇水文，毕竟我给它命名为《你真的会用Retrofit2吗?Retrofit2完全教程》。
@@ -47,7 +45,9 @@ Retrofit retrofit = new Retrofit.Builder()
 
 创建Retrofit实例时需要通过`Retrofit.Builder`,并调用`baseUrl`方法设置URL。
  **注1：** Retrofit2 的baseUlr 必须以 **/（斜线）** 结束，不然会抛出一个`IllegalArgumentException`,所以如果你看到别的教程没有以 **/** 结束，那么多半是直接从Retrofit 1.X 照搬过来的。
- **注2：** 上面的 **注1** 应该描述为 **baseUrl 中的路径(path)必须以 / 结束**， 因为有些特殊情况可以不以**/**结尾（感谢[@liujc](https://www.jianshu.com/u/0633b9f8256b) 提出,81楼），比如 其实这个 URL `https://www.baidu.com?key=value`用来作为baseUrl其实是可行的，因为这个URL隐含的路径就是  **/（斜线，代表根目录）**  ，而后面的`?key=value`在拼装请求时会被丢掉所以写上也没用。之所以 Retrofit 2 在文档上要求必须以 **/（斜线）** 结尾的要求想必是要消除歧义以及简化规则。——2017.10.27
+ **注2：** 上面的 **注1** 应该描述为 **baseUrl 中的路径(path)必须以 / 结束**
+
+ `https://www.baidu.com?key=value`用来作为baseUrl其实是可行的，因为这个URL隐含的路径就是  **/（斜线，代表根目录）**  ，而后面的`?key=value`在拼装请求时会被丢掉所以写上也没用。之所以 Retrofit 2 在文档上要求必须以 **/（斜线）** 结尾的要求想必是要消除歧义以及简化规则。——2017.10.27
 
 ### 1.2、接口定义
 
@@ -94,7 +94,7 @@ call.enqueue(new Callback<ResponseBody>() {
 打印结果:
 
 ```json
-{"code":200,"msg":"OK","data":{"id":2,"date":"2016-04-15 03:17:50","author":"怪盗kidou","title":"Retrofit2 测试2","content":"这里是 Retrofit2 Demo 测试服务器2"},"count":0,"page":0}
+{"code":200,"msg":"OK","data":{"id":2,"date":"2016-04-15 03:17:50","author":"lifen","title":"Retrofit2 测试2","content":"这里是 Retrofit2 Demo 测试服务器2"},"count":0,"page":0}
 ```
 
 示例源码见 [Example01.java](https://github.com/li-fengjie/FaceCompareEyekey/blob/master/Example01.java)
@@ -105,7 +105,7 @@ call.enqueue(new Callback<ResponseBody>() {
 
 ### 第一类：HTTP请求方法
 
-[](imgs/)
+![img](imgs/1.png)
 
 ```java
 public interface BlogService {
@@ -120,36 +120,32 @@ public interface BlogService {
 ```
 
 **注：**method 的值 retrofit 不会做处理，所以要自行保证其准确性，之前使用小写也可以是因为示例源码中的服务器不区分大小写，所以希望大家注意，感谢 @言過祺實 发现该问题。
- 示例源码见 [Example02.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example02.java)
+ 示例源码见 [Example02.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example02.java)
 
 ### 第二类：标记类
 
-![img](//upload-images.jianshu.io/upload_images/1724103-4d09b5595bfb3291.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/671/format/webp)
+![img](imgs/2.png)
 
-标记类注解
-
- 
-
-Example03.java
+​											标记类注解
 
 ### 第三类：参数类
 
-![img](//upload-images.jianshu.io/upload_images/1724103-073abf80aacf492e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/741/format/webp)
+![img](imgs/3.png)
 
 参数类注解
 
 **注1：**{占位符}和**PATH**尽量只用在URL的path部分，url中的参数使用`Query`和`QueryMap` 代替，保证接口定义的简洁
  **注2：**`Query`、`Field`和`Part`这三者都支持**数组**和实现了`Iterable`接口的类型，如`List`，`Set`等，方便向后台传递数组。
 
-```
+```java
 Call<ResponseBody> foo(@Query("ids[]") List<Integer> ids);
 //结果：ids[]=0&ids[]=1&ids[]=2
 ```
 
-Path 示例源码见 [Example01.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example01.java)  
- Field、FieldMap、Part和PartMap 示例源码见 [Example03.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example03.java)  
- Header和Headers 示例源码见 [Example04.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example04.java)  
- Query、QueryMap、Url 示例源码见 [Example05.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example05.java)
+Path 示例源码见 [Example01.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example01.java)  
+ Field、FieldMap、Part和PartMap 示例源码见 [Example03.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example03.java)  
+ Header和Headers 示例源码见 [Example04.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example04.java)  
+ Query、QueryMap、Url 示例源码见 [Example05.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example05.java)
 
 ## 3、Gson与Converter
 
@@ -160,7 +156,7 @@ Path 示例源码见 [Example01.java](https://github.com/ikidou/Retrofit2Demo/bl
  而`Converter`就是Retrofit为我们提供用于将`ResponseBody`转换为我们想要的类型，
  有了`Converter`之后我们就可以写把我们的第一个例子的接口写成这个样子了：
 
-```
+```java
 public interface BlogService {
   @GET("blog/{id}")
   Call<Result<Blog>> getBlog(@Path("id") int id);
@@ -171,13 +167,13 @@ public interface BlogService {
 
 引入Gson支持:
 
-```
+```groovy
 compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 ```
 
 通过GsonConverterFactory为Retrofit添加Gson支持：
 
-```
+```java
 Gson gson = new GsonBuilder()
       //配置你的Gson
       .setDateFormat("yyyy-MM-dd hh:mm:ss")
@@ -190,37 +186,35 @@ Retrofit retrofit = new Retrofit.Builder()
       .build();
 ```
 
-示例源码见 [Example06.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example06.java)
+示例源码见 [Example06.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example06.java)
 
 这样Retrofit就会使用Gson将`ResponseBody`转换我们想要的类型。
 
 这是时候我们终于可以演示如使创建一个Blog了！
 
-```
+```java
 @POST("blog")
 Call<Result<Blog>> createBlog(@Body Blog blog);
 ```
 
 被`@Body`注解的的Blog将会被Gson转换成RequestBody发送到服务器。
 
-```
+```java
 BlogService service = retrofit.create(BlogService.class);
 Blog blog = new Blog();
 blog.content = "新建的Blog";
 blog.title = "测试";
-blog.author = "怪盗kidou";
+blog.author = "lifen";
 Call<Result<Blog>> call = service.createBlog(blog);
 ```
 
 结果：
 
-```
-Result{code=200, msg='OK', data=Blog{id=20, date='2016-04-21 05:29:58', author='怪盗kidou', title='测试', content='新建的Blog'}, count=0, page=0}
+```java
+Result{code=200, msg='OK', data=Blog{id=20, date='2016-04-21 05:29:58', author='lifen', title='测试', content='新建的Blog'}, count=0, page=0}
 ```
 
-示例源码见 [Example07.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example07.java)
-
-如果你对Gson不熟悉可以参考我写的[《你真的会用Gson吗?Gson使用指南》](https://www.jianshu.com/p/e740196225a4) 系列。
+示例源码见 [Example07.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example07.java)
 
 ## 4、RxJava与CallAdapter
 
@@ -230,7 +224,7 @@ Result{code=200, msg='OK', data=Blog{id=20, date='2016-04-21 05:29:58', author='
 
 引入RxJava支持:
 
-```
+```groovy
 compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
 // 针对rxjava2.x（adapter-rxjava2的版本要 >= 2.2.0）
 compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
@@ -238,7 +232,7 @@ compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
 通过RxJavaCallAdapterFactory为Retrofit添加RxJava支持：
 
-```
+```java
 Retrofit retrofit = new Retrofit.Builder()
       .baseUrl("http://localhost:4567/")
       .addConverterFactory(GsonConverterFactory.create())
@@ -250,7 +244,7 @@ Retrofit retrofit = new Retrofit.Builder()
 
 接口设计：
 
-```
+```java
 public interface BlogService {
   @POST("/blog")
   Observable<Result<List<Blog>>> getBlogs();
@@ -259,7 +253,7 @@ public interface BlogService {
 
 使用：
 
-```
+```java
 BlogService service = retrofit.create(BlogService.class);
 service.getBlogs(1)
   .subscribeOn(Schedulers.io())
@@ -283,11 +277,11 @@ service.getBlogs(1)
 
 结果：
 
-```
-Result{code=200, msg='OK', data=[Blog{id=1, date='2016-04-15 03:17:50', author='怪盗kidou', title='Retrofit2 测试1', content='这里是 Retrofit2 Demo 测试服务器1'},.....], count=20, page=1}
+```json
+Result{code=200, msg='OK', data=[Blog{id=1, date='2016-04-15 03:17:50', author='lifen', title='Retrofit2 测试1', content='这里是 Retrofit2 Demo 测试服务器1'},.....], count=20, page=1}
 ```
 
-示例源码见 [Example08.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example08.java)
+示例源码见 [Example08.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example08.java)
 
 「20160608补充」：像上面的这种情况最后我们无法获取到返回的Header和响应码的，如果我们需要这两者，提供两种方案：
  1、用`Observable<Response<T>>` 代替 `Observable<T>` ,这里的`Response`指`retrofit2.Response`   
@@ -299,7 +293,7 @@ Result{code=200, msg='OK', data=[Blog{id=1, date='2016-04-15 03:17:50', author='
 
 在此之前先了解一下Converter接口及其作用：
 
-```
+```java
 public interface Converter<F, T> {
   // 实现从 F(rom) 到 T(o)的转换
   T convert(F value) throws IOException;
@@ -333,7 +327,7 @@ public interface Converter<F, T> {
 
 我们要想从`Call<ResponseBody>` 转换为 `Call<String>` 那么对应的F和T则分别对应`ResponseBody`和`String`，我们定义一个`StringConverter`并实现Converter接口。
 
-```
+```java
 public static class StringConverter implements Converter<ResponseBody, String> {
 
   public static final StringConverter INSTANCE = new StringConverter();
@@ -347,7 +341,7 @@ public static class StringConverter implements Converter<ResponseBody, String> {
 
 我们需要一个`Fractory`来向Retrofit注册`StringConverter`
 
-```
+```java
 public static class StringConverterFactory extends Converter.Factory {
 
   public static final StringConverterFactory INSTANCE = new StringConverterFactory();
@@ -370,7 +364,7 @@ public static class StringConverterFactory extends Converter.Factory {
 
 使用`Retrofit.Builder.addConverterFactory`向Retrofit注册我们`StringConverterFactory`：
 
-```
+```java
 Retrofit retrofit = new Retrofit.Builder()
       .baseUrl("http://localhost:4567/")
       // 我们自定义的一定要放在Gson这类的Converter前面 
@@ -385,7 +379,7 @@ Retrofit retrofit = new Retrofit.Builder()
 
 有没有很简单?如果你有其它的需求处理的就自己实现吧。
 
-示例源码见 [Example09.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example09.java)
+示例源码见 [Example09.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example09.java)
 
 ## 6、自定义CallAdapter
 
@@ -393,7 +387,7 @@ Retrofit retrofit = new Retrofit.Builder()
 
 先看一下CallAdapter接口定义及各方法的作用：
 
-```
+```java
 public interface CallAdapter<T> {
 
   // 直正数据的类型 如Call<T> 中的 T
@@ -429,7 +423,7 @@ public interface CallAdapter<T> {
 
 在此我们需要定义一个`CustomCall`，不过这里的`CustomCall`作为演示只是对`Call`的一个包装，并没有实际的用途。
 
-```
+```java
 public static class CustomCall<R> {
 
   public final Call<R> call;
@@ -446,7 +440,7 @@ public static class CustomCall<R> {
 
 有了`CustomCall`，我们还需要一个`CustomCallAdapter`来实现 `Call<T>` 到 `CustomCall<T>`的转换，这里需要注意的是最后的泛型，是我们要返回的类型。
 
-```
+```java
 public static class CustomCallAdapter implements CallAdapter<CustomCall<?>> {
 
   private final Type responseType;
@@ -471,7 +465,7 @@ public static class CustomCallAdapter implements CallAdapter<CustomCall<?>> {
 
 提供一个`CustomCallAdapterFactory`用于向Retrofit提供`CustomCallAdapter`：
 
-```
+```java
 public static class CustomCallAdapterFactory extends CallAdapter.Factory {
   public static final CustomCallAdapterFactory INSTANCE = new CustomCallAdapterFactory();
 
@@ -491,7 +485,7 @@ public static class CustomCallAdapterFactory extends CallAdapter.Factory {
 
 使用`addCallAdapterFactory`向Retrofit注册`CustomCallAdapterFactory`
 
-```
+```java
 Retrofit retrofit = new Retrofit.Builder()
       .baseUrl("http://localhost:4567/")
       .addConverterFactory(Example09.StringConverterFactory.create())
@@ -502,7 +496,7 @@ Retrofit retrofit = new Retrofit.Builder()
 
 **注：** `addCallAdapterFactory`与`addConverterFactory`同理，也有先后顺序。
 
-示例源码见 [Example10.java](https://github.com/ikidou/Retrofit2Demo/blob/master/client/src/main/java/com/github/ikidou/Example10.java)
+示例源码见 [Example10.java](https://github.com/li-fengjie/Retrofit2Demo/blob/master/client/src/main/java/com/github/li-fengjie/Example10.java)
 
 ## 7、其它说明
 
@@ -523,7 +517,7 @@ Retrofit retrofit = new Retrofit.Builder()
 | -------------------------------------- | --------------------------- | ------------------------------------------ |
 | <http://localhost:4567/path/to/other/> | /post                       | <http://localhost:4567/post>               |
 | <http://localhost:4567/path/to/other/> | post                        | <http://localhost:4567/path/to/other/post> |
-| <http://localhost:4567/path/to/other/> | <https://github.com/ikidou> | <https://github.com/ikidou>                |
+| <http://localhost:4567/path/to/other/> | <https://github.com/li-fengjie> | <https://github.com/li-fengjie>                |
 
 从上面不能难看出以下规则：
 
@@ -558,19 +552,3 @@ Retrofit retrofit = new Retrofit.Builder()
 ## 结语
 
 其它本博客的内容早就已经完成好了，但由于当时HTTP、反射、注解的博客一篇也没有写，所以一直没有发，期间也有不少的博主写了Retrofit2的博文，不过呢没有自定义相关的内容也没有对各个注解进行详解，所以我还是决定发出来帮助一下那此对Retrofit2无从下手同鞋。
-
-
-该项目中没有的配置文件，也不是Android项目，所以打开后**可能会报错**，请按下面的步骤解决：
-
-1. **File -> Project Structure (Ctrl+Alt+Shift+S)**,并保证配置符合下图的要求后保存。  
-![项目设置1](jdk_setting.png)
-
-2. 打开右侧的Gradle面板，刷新项目依赖。  
-![项目设置2](gradle_setting.png)
-
-## 解决 找不到或无法加载主类
-
-- Android Studio: 在运行之前先Build
-- Idea : 请按下图的配置修改（适用于所有标准Java Gradle项目）
-
-![IDEA 运行配置](idea_gradle.png)
