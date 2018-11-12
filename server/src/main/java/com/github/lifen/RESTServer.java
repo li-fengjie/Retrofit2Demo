@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.github.ikidou;
+package com.github.lifen;
 
-import com.github.ikidou.db.DB;
-import com.github.ikidou.handler.BlogHandler;
-import com.github.ikidou.handler.FormHandler;
-import com.github.ikidou.handler.HeaderHandler;
-import com.github.ikidou.transformer.GsonTransformer;
+import com.github.lifen.db.DB;
+import com.github.lifen.handler.BlogHandler;
+import com.github.lifen.handler.FormHandler;
+import com.github.lifen.handler.HeaderHandler;
+import com.github.lifen.transformer.GsonTransformer;
 import com.google.gson.Gson;
 
 import java.sql.SQLException;
@@ -61,7 +61,7 @@ public class RESTServer {
             @Override
             public void handle(Request request, Response response) throws Exception {
                 response.type(TYPE);
-                response.header("author", "ikidou");
+                response.header("author", "lifen");
             }
         });
 

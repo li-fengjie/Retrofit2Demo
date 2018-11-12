@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.ikidou.handler;
+package com.github.lifen.handler;
 
-import com.github.ikidou.Resp;
-import com.github.ikidou.db.DB;
-import com.github.ikidou.entity.Blog;
-import com.github.ikidou.util.StringUtils;
+import com.github.lifen.Resp;
+import com.github.lifen.db.DB;
+import com.github.lifen.entity.Blog;
+import com.github.lifen.util.StringUtils;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;

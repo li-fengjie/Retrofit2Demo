@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.github.ikidou.db;
+package com.github.lifen.db;
 
-import com.github.ikidou.entity.Blog;
+import com.github.lifen.entity.Blog;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.db.SqliteDatabaseType;
@@ -78,7 +78,7 @@ public class DB {
 
         for (int i = 0; i < 15; i++) {
             Blog blog = new Blog();
-            blog.author = "怪盗kidou";
+            blog.author = "life";
             blog.title = "Retrofit2 测试" + (i + 1);
             blog.content = "这里是 Retrofit2 Demo 测试服务器" + (i + 1);
             blogList.add(blog);

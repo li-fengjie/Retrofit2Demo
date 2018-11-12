@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.ikidou;
+package com.github.lifen;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -43,7 +43,7 @@ public class Example04 {
         BlogService service = retrofit.create(BlogService.class);
 
         //演示 @Headers 和 @Header
-        Call<ResponseBody> call1 = service.testHeader("ikidou");
+        Call<ResponseBody> call1 = service.testHeader("lifen");
         ResponseBodyPrinter.printResponseBody(call1);
     }
 }

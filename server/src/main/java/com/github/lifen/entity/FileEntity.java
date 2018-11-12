@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.ikidou;
+package com.github.lifen.entity;
 
-public class Resp {
-    public int code;
-    public String msg;
-    public Object data;
-    public long count;
-    public long page;
-
-    public static Resp create(int code, String msg) {
-        return create(code, msg, null);
-    }
-
-    public static Resp create(int code, String msg, Object data) {
-        Resp resp = new Resp();
-        resp.code = code;
-        resp.msg = msg;
-        resp.data = data;
-        return resp;
-    }
+public class FileEntity {
+    public String name;
+    public String contentType;
+    public long size;
+    public String readableSize;
+    public String savePath;
 }

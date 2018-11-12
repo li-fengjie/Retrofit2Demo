@@ -1,13 +1,5 @@
 # Retrofit2Demo
 
-关于Retrofit2的使用教程见我的博客 [《你真的会用Retrofit2吗?Retrofit2完全教程》](http://www.jianshu.com/p/308f3c54abdd)
-
-Retrofit2 源码位置 [`client/src/main/java/com/github/ikidou/`](https://github.com/ikidou/Retrofit2Demo/tree/master/client/src/main/java/com/github/ikidou)
-
-配套 Server 运行方式：找到[`server/src/main/java/com/github/ikidou/RESTServer.java`](https://github.com/ikidou/Retrofit2Demo/blob/master/server/src/main/java/com/github/ikidou/RESTServer.java) 直接右键运行即可
-
-## Android Studio 用户需要注意：
-
 该项目中没有的配置文件，也不是Android项目，所以打开后**可能会报错**，请按下面的步骤解决：
 
 1. **File -> Project Structure (Ctrl+Alt+Shift+S)**,并保证配置符合下图的要求后保存。  
@@ -25,7 +17,7 @@ Retrofit2 源码位置 [`client/src/main/java/com/github/ikidou/`](https://githu
 
 License
 -------
-    Copyright 2016 ikidou
+    Copyright 2016 lifen
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.ikidou;
+package com.github.lifen;
 
-import com.github.ikidou.entity.Blog;
-import com.github.ikidou.entity.Result;
+import com.github.lifen.entity.Blog;
+import com.github.lifen.entity.Result;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

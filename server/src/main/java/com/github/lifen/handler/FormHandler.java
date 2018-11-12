@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ikidou
+ * Copyright 2016 lifen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.ikidou.handler;
+package com.github.lifen.handler;
 
-import com.github.ikidou.entity.FileEntity;
-import com.github.ikidou.util.FileSizeUtil;
+import com.github.lifen.entity.FileEntity;
+import com.github.lifen.util.FileSizeUtil;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
