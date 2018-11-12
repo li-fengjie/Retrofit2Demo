@@ -1,5 +1,6 @@
 # Retrofit2Demo
 
+
 该项目中没有的配置文件，也不是Android项目，所以打开后**可能会报错**，请按下面的步骤解决：
 
 1. **File -> Project Structure (Ctrl+Alt+Shift+S)**,并保证配置符合下图的要求后保存。  
